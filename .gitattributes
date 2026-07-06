@@ -1,1 +1,6 @@
-*.cshtml linguist-language=C#
+MiniCRM.RazorPages/Pages/Shared/_ValidationScriptsPartial.cshtml linguist-language=C#
+MiniCRM.RazorPages/Pages/Privacy.cshtml linguist-language=C#
+MiniCRM.RazorPages/Pages/_ViewImports.cshtml linguist-language=C#
+MiniCRM.RazorPages/Pages/Index.cshtml linguist-language=C#
+MiniCRM.RazorPages/Pages/Account/Logout.cshtml linguist-language=C#
+MiniCRM.RazorPages/Pages/_ViewStart.cshtml linguist-language=C#
