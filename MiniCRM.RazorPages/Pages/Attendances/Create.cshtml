@@ -1,0 +1,60 @@
+@page "{customerId:int?}"
+@model CreateModel
+@{
+    ViewData["Title"] = "Novo atendimento";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h3 page-title mb-1">Novo atendimento</h1>
+        <p class="text-muted mb-0">Registre um contato realizado com o cliente.</p>
+    </div>
+    <a asp-page="/Customers/Index" class="btn btn-outline-secondary">Clientes</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="Attendance.ClienteId" class="form-label"></label>
+                    <select asp-for="Attendance.ClienteId" asp-items="Model.CustomerOptions" class="form-select">
+                        <option value="">Selecione um cliente</option>
+                    </select>
+                    <span asp-validation-for="Attendance.ClienteId" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Attendance.TipoAtendimento" class="form-label"></label>
+                    <select asp-for="Attendance.TipoAtendimento" asp-items="Html.GetEnumSelectList<AttendanceType>()" class="form-select"></select>
+                    <span asp-validation-for="Attendance.TipoAtendimento" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Attendance.DataAtendimento" class="form-label"></label>
+                    <input asp-for="Attendance.DataAtendimento" type="datetime-local" class="form-control" />
+                    <span asp-validation-for="Attendance.DataAtendimento" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Attendance.ProximoPasso" class="form-label"></label>
+                    <input asp-for="Attendance.ProximoPasso" class="form-control" />
+                    <span asp-validation-for="Attendance.ProximoPasso" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="Attendance.Observacao" class="form-label"></label>
+                    <textarea asp-for="Attendance.Observacao" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="Attendance.Observacao" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 mt-4">
+                <a asp-page="/Customers/Index" class="btn btn-outline-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Salvar atendimento</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

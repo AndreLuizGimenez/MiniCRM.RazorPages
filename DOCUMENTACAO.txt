@@ -1,0 +1,435 @@
+MiniCRM.RazorPages
+==================
+
+1. Objetivo do projeto
+----------------------
+
+O MiniCRM.RazorPages é um projeto web simples de atendimento comercial.
+
+A ideia é simular um pequeno CRM, onde um usuário autenticado consegue cadastrar clientes, acompanhar o status comercial de cada cliente e registrar atendimentos realizados, como contatos por WhatsApp, ligação, e-mail ou reunião.
+
+O projeto foi pensado para quem está aprendendo C#, ASP.NET Core Razor Pages, Entity Framework Core e SQL Server. Por isso, ele evita arquiteturas complexas e bibliotecas desnecessárias. O foco está em entender bem o fluxo básico de uma aplicação web com banco de dados.
+
+
+2. Tecnologias usadas
+---------------------
+
+- C#
+- ASP.NET Core Razor Pages
+- Entity Framework Core
+- SQL Server LocalDB
+- Bootstrap
+- Visual Studio
+
+Também foi usada autenticação por cookies do ASP.NET Core e a classe PasswordHasher para salvar senhas com hash.
+
+
+3. Estrutura de pastas
+----------------------
+
+Raiz do projeto:
+
+- MiniCRM.slnx
+  Arquivo da solução para abrir no Visual Studio.
+
+- MiniCRM.RazorPages/
+  Projeto web ASP.NET Core Razor Pages.
+
+- README.md
+  Arquivo principal para exibição no GitHub.
+
+- DOCUMENTACAO.txt
+  Documentação didática do projeto.
+
+- dotnet-tools.json
+  Manifesto de ferramenta local usado para executar dotnet-ef pelo terminal.
+
+Dentro de MiniCRM.RazorPages:
+
+- Models/
+  Contém as classes principais do sistema:
+  ApplicationUser, Customer, Attendance, CustomerStatus e AttendanceType.
+
+- Data/
+  Contém o MiniCrmDbContext e a pasta Migrations.
+
+- Pages/Account/
+  Contém as páginas de cadastro, login e logout.
+
+- Pages/Dashboard/
+  Contém a página inicial protegida com os indicadores do CRM.
+
+- Pages/Customers/
+  Contém as páginas do CRUD de clientes.
+
+- Pages/Attendances/
+  Contém as páginas do CRUD de atendimentos.
+
+- Pages/Shared/
+  Contém o layout principal e arquivos compartilhados do Razor Pages.
+
+- wwwroot/
+  Contém arquivos estáticos, como CSS, JavaScript e bibliotecas client-side do template.
+
+
+4. Como configurar o banco SQL Server
+-------------------------------------
+
+O projeto está configurado para usar SQL Server LocalDB, que é adequado para estudo e desenvolvimento local no Visual Studio.
+
+A connection string padrão está em:
+
+MiniCRM.RazorPages/appsettings.json
+
+E também em:
+
+MiniCRM.RazorPages/appsettings.Development.json
+
+Connection string usada:
+
+Server=(localdb)\mssqllocaldb;Database=MiniCRM_RazorPages;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True
+
+Explicação:
+
+- Server=(localdb)\mssqllocaldb
+  Usa o SQL Server LocalDB instalado com o Visual Studio.
+
+- Database=MiniCRM_RazorPages
+  Nome do banco que será criado.
+
+- Trusted_Connection=True
+  Usa autenticação do Windows.
+
+- MultipleActiveResultSets=true
+  Permite múltiplas operações no SQL Server durante a execução.
+
+- TrustServerCertificate=True
+  Evita problemas de certificado no ambiente local.
+
+
+5. Como executar migrations
+---------------------------
+
+O projeto já possui uma migration inicial chamada InitialCreate.
+
+Opção 1: Visual Studio
+
+1. Abra a solução MiniCRM.slnx.
+2. Abra o Package Manager Console.
+3. Confira se o projeto padrão selecionado é MiniCRM.RazorPages.
+4. Execute:
+
+Update-Database
+
+Esse comando cria o banco MiniCRM_RazorPages no LocalDB e cria as tabelas Users, Customers e Attendances.
+
+Opção 2: Terminal
+
+Na raiz do projeto, execute:
+
+dotnet tool restore
+
+Depois execute:
+
+dotnet tool run dotnet-ef database update --project .\MiniCRM.RazorPages\MiniCRM.RazorPages.csproj --startup-project .\MiniCRM.RazorPages\MiniCRM.RazorPages.csproj
+
+Para criar uma nova migration futuramente:
+
+dotnet tool run dotnet-ef migrations add NomeDaMigration --project .\MiniCRM.RazorPages\MiniCRM.RazorPages.csproj --startup-project .\MiniCRM.RazorPages\MiniCRM.RazorPages.csproj --output-dir Data\Migrations
+
+
+6. Como rodar o projeto no Visual Studio
+----------------------------------------
+
+1. Abra o Visual Studio.
+2. Abra a solução MiniCRM.slnx.
+3. Aguarde a restauração dos pacotes NuGet.
+4. Configure o banco com Update-Database.
+5. Defina MiniCRM.RazorPages como projeto inicial, se necessário.
+6. Pressione F5 ou clique em Run.
+7. A aplicação abrirá no navegador.
+8. Acesse a tela de cadastro, crie um usuário e entre no sistema.
+
+
+7. Principais funcionalidades
+-----------------------------
+
+Autenticação:
+
+- Cadastro de usuário.
+- Login.
+- Logout.
+- Bloqueio das páginas internas.
+- Senha armazenada com hash.
+
+Clientes:
+
+- Cadastrar cliente.
+- Listar clientes.
+- Buscar cliente por nome ou e-mail.
+- Editar cliente.
+- Ver detalhes.
+- Excluir cliente.
+
+Atendimentos:
+
+- Registrar atendimento vinculado a um cliente.
+- Listar atendimentos de um cliente.
+- Editar atendimento.
+- Excluir atendimento.
+
+Dashboard:
+
+- Total de clientes.
+- Total de clientes novos.
+- Total de clientes em negociação.
+- Total de clientes fechados.
+- Total de clientes perdidos.
+- Últimos atendimentos registrados.
+
+
+8. Principais classes
+---------------------
+
+ApplicationUser
+
+Representa o usuário que acessa o sistema.
+
+Campos principais:
+
+- Id
+- Nome
+- Email
+- PasswordHash
+- DataCadastro
+
+O campo PasswordHash guarda a senha transformada em hash. A senha original nunca é salva no banco.
+
+
+Customer
+
+Representa um cliente do CRM.
+
+Campos principais:
+
+- Id
+- Nome
+- Email
+- Telefone
+- Documento
+- DataCadastro
+- Status
+- Atendimentos
+
+A propriedade Atendimentos representa o relacionamento entre um cliente e seus atendimentos.
+
+
+Attendance
+
+Representa um atendimento feito para um cliente.
+
+Campos principais:
+
+- Id
+- ClienteId
+- Cliente
+- TipoAtendimento
+- DataAtendimento
+- Observacao
+- ProximoPasso
+
+ClienteId é a chave estrangeira que vincula o atendimento ao cliente.
+
+
+CustomerStatus
+
+Enum que representa o status comercial do cliente:
+
+- Novo
+- Em negociação
+- Fechado
+- Perdido
+
+
+AttendanceType
+
+Enum que representa o tipo de atendimento:
+
+- WhatsApp
+- Ligação
+- E-mail
+- Reunião
+
+
+MiniCrmDbContext
+
+Classe responsável por conectar o Entity Framework Core ao banco de dados.
+
+Ela possui os DbSets:
+
+- Users
+- Customers
+- Attendances
+
+Também configura:
+
+- Índice único para e-mail de usuário.
+- Índice para e-mail de cliente.
+- Relacionamento entre Customer e Attendance.
+- Exclusão em cascata dos atendimentos quando um cliente é removido.
+
+
+9. Fluxo de login
+-----------------
+
+O fluxo foi implementado com autenticação por cookies, sem usar ASP.NET Core Identity completo.
+
+Essa escolha foi feita para manter o projeto simples e didático.
+
+Cadastro:
+
+1. O usuário informa nome, e-mail, senha e confirmação de senha.
+2. O sistema verifica se já existe usuário com o mesmo e-mail.
+3. A senha é transformada em hash usando PasswordHasher.
+4. O usuário é salvo na tabela Users.
+5. O sistema cria um cookie de autenticação.
+6. O usuário é redirecionado para o Dashboard.
+
+Login:
+
+1. O usuário informa e-mail e senha.
+2. O sistema busca o usuário pelo e-mail.
+3. O PasswordHasher compara a senha digitada com o hash salvo.
+4. Se estiver correto, o sistema cria o cookie de autenticação.
+5. O usuário acessa as páginas protegidas.
+
+Logout:
+
+1. O usuário clica em Sair.
+2. O sistema remove o cookie de autenticação.
+3. O usuário volta para a tela de login.
+
+Páginas protegidas:
+
+No Program.cs, as pastas abaixo exigem usuário logado:
+
+- Pages/Customers
+- Pages/Attendances
+- Pages/Dashboard
+
+
+10. Fluxo do CRUD de clientes
+-----------------------------
+
+Listagem:
+
+A página Pages/Customers/Index.cshtml mostra todos os clientes cadastrados.
+
+Busca:
+
+O campo de busca filtra clientes por nome ou e-mail usando Entity Framework Core.
+
+Cadastro:
+
+A página Pages/Customers/Create.cshtml permite cadastrar:
+
+- Nome
+- E-mail
+- Telefone
+- Documento
+- Status
+
+Nome e e-mail são obrigatórios.
+
+Edição:
+
+A página Pages/Customers/Edit.cshtml atualiza os dados principais do cliente.
+
+Detalhes:
+
+A página Pages/Customers/Details.cshtml mostra os dados do cliente e seus atendimentos.
+
+Exclusão:
+
+A página Pages/Customers/Delete.cshtml confirma a exclusão.
+
+Como o relacionamento foi configurado com exclusão em cascata, os atendimentos do cliente também são removidos quando o cliente é excluído.
+
+
+11. Fluxo de registro de atendimentos
+-------------------------------------
+
+Um atendimento sempre precisa estar vinculado a um cliente.
+
+Cadastro:
+
+A página Pages/Attendances/Create.cshtml permite informar:
+
+- Cliente
+- Tipo de atendimento
+- Data do atendimento
+- Observação
+- Próximo passo
+
+O sistema valida se o cliente selecionado existe no banco.
+
+Listagem:
+
+A página Pages/Attendances/Index.cshtml lista os atendimentos de um cliente específico.
+
+Edição:
+
+A página Pages/Attendances/Edit.cshtml permite alterar cliente, tipo, data, observação e próximo passo.
+
+Exclusão:
+
+A página Pages/Attendances/Delete.cshtml confirma a remoção do atendimento.
+
+
+12. Validações
+--------------
+
+As validações principais ficam nas classes da pasta Models, usando Data Annotations.
+
+Exemplos:
+
+- Required
+- EmailAddress
+- Phone
+- StringLength
+- Range
+
+Essas validações são usadas pelo Razor Pages no lado do servidor e também ajudam a gerar mensagens de validação no formulário.
+
+
+13. Sugestões simples de melhorias futuras
+------------------------------------------
+
+- Adicionar paginação na listagem de clientes.
+- Adicionar filtro por status do cliente.
+- Adicionar busca por documento.
+- Adicionar campo de responsável pelo cliente.
+- Adicionar confirmação visual melhor para exclusões.
+- Adicionar testes automatizados básicos.
+- Adicionar tela de alteração de senha.
+- Trocar a autenticação simples por ASP.NET Core Identity em uma versão futura.
+- Adicionar soft delete para não apagar clientes definitivamente.
+- Adicionar exportação simples para CSV.
+
+
+14. O que estudar depois deste projeto
+--------------------------------------
+
+Depois de entender este projeto, bons próximos passos são:
+
+- ASP.NET Core Identity.
+- Boas práticas de segurança em autenticação.
+- Relacionamentos no Entity Framework Core.
+- Consultas LINQ mais avançadas.
+- Paginação e filtros.
+- View Components e Partial Views.
+- Testes com xUnit.
+- Injeção de dependência com serviços próprios.
+- Publicação de aplicações ASP.NET Core.
+- Git e GitHub para versionamento.
+

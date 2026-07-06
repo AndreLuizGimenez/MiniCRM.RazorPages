@@ -1,0 +1,47 @@
+@page "{id:int}"
+@model DeleteModel
+@{
+    ViewData["Title"] = "Excluir atendimento";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card border-danger">
+            <div class="card-body p-4">
+                <h1 class="h3 page-title mb-3">Excluir atendimento</h1>
+                <p class="mb-4">
+                    Confirme a exclusão do atendimento de
+                    <strong>@Model.Attendance.Cliente?.Nome</strong>
+                    em @Model.Attendance.DataAtendimento.ToString("dd/MM/yyyy HH:mm").
+                </p>
+
+                <dl class="row">
+                    <dt class="col-sm-4">Tipo</dt>
+                    <dd class="col-sm-8">@FormatAttendanceType(Model.Attendance.TipoAtendimento)</dd>
+
+                    <dt class="col-sm-4">Observação</dt>
+                    <dd class="col-sm-8">@Model.Attendance.Observacao</dd>
+                </dl>
+
+                <form method="post">
+                    <input type="hidden" asp-for="Attendance.Id" />
+                    <input type="hidden" asp-for="Attendance.ClienteId" />
+                    <div class="d-flex justify-content-end gap-2">
+                        <a asp-page="/Customers/Details" asp-route-id="@Model.Attendance.ClienteId" class="btn btn-outline-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-danger">Excluir atendimento</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    private static string FormatAttendanceType(AttendanceType type) => type switch
+    {
+        AttendanceType.Ligacao => "Ligação",
+        AttendanceType.Email => "E-mail",
+        AttendanceType.Reuniao => "Reunião",
+        _ => "WhatsApp"
+    };
+}
