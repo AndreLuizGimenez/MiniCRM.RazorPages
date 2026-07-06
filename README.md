@@ -2,7 +2,7 @@
 
 Mini CRM de Atendimento Comercial desenvolvido com **ASP.NET Core Razor Pages**, **C#**, **Entity Framework Core**, **SQL Server LocalDB** e **Bootstrap**.
 
-Este projeto foi criado como estudo prático e portfólio para vagas de **Desenvolvedor C# Júnior**. A proposta é mostrar uma aplicação web simples, organizada e funcional, sem arquitetura complexa ou bibliotecas desnecessárias.
+Este projeto foi criado como estudo prático e portfólio para vagas de **Desenvolvedor C# Júnior**. A proposta é apresentar uma aplicação web simples, organizada e funcional, utilizando também ferramentas de IA como apoio durante o desenvolvimento para agilizar e auxiliar o processo.
 
 ## Status do Projeto
 
