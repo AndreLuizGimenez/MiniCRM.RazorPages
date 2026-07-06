@@ -202,6 +202,12 @@ Este projeto foi criado para praticar:
 - Hash de senha.
 - Organização básica de uma aplicação ASP.NET Core.
 
+## Uso de IA no Desenvolvimento
+
+Este projeto contou com o apoio de ferramentas de Inteligência Artificial para acelerar o processo de desenvolvimento, auxiliar na organização do código, revisar ideias de implementação e melhorar a documentação.
+
+As decisões técnicas, validações, testes locais e entendimento do funcionamento da aplicação fizeram parte do processo de estudo e construção do projeto.
+
 ## Observação
 
 Este projeto não usa ASP.NET Core Identity completo de propósito. A autenticação foi feita de forma simples com cookies e `PasswordHasher`, para facilitar o entendimento de quem está aprendendo C# e ASP.NET Core.
